@@ -38,4 +38,10 @@ folder also includes other interesting files and charts.
 
 ## Predict
 
+To segment an image, adjust the `predict.py` to point to the trained model and the image that will be segmented and run:
+
+```bash
+python predict.py
+```
+
 

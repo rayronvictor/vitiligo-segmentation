@@ -3,7 +3,7 @@ from ultralytics import YOLO
 from utils import plot_result
 
 #model = YOLO("models/yolo11x-seg.pt")
-model = YOLO("runs/segment/train2/weights/best.pt") # change to point to the trained weights
+model = YOLO("runs/segment/train/weights/best.pt") # change to point to the trained weights
 
 results = model("datasets/vitiligo-poc/test/images/5aeb0f6e-images--19-_jpg.rf.6f36d713f594b4172492fdba682cfcc9.jpg")  # predict on an image
 

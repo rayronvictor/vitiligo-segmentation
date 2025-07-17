@@ -2,43 +2,42 @@
 ## Setup
 
 Install [MiniConda](https://www.anaconda.com/docs/getting-started/miniconda/install#macos-terminal-installer) and
-create the python environment
+create the Python environment:
 
 ```bash
 conda env create -f environment.yaml
 ```
 
-After that, activate the environment and install the dependencies:
+Then activate the environment and install the dependencies:
 
 ```bash
-# activate the env
+# activate the # environment
 conda activate vitiligo-seg
 
 # install the dependencies
 pip install -r requirements.txt
 ```
 
-## Training the model
+## Training the Model
 
-To train the model, you will need a dataset of labeled images. You can use the [labelstud.io](https://labelstud.io/)
-to label the images using the [Semantic Segment with Polygons](https://labelstud.io/templates/image_polygons).
+To train the model, you'll need a dataset of labeled images. You can use [labelstud.io](https://labelstud.io/) to label the images using the [Semantic Segment with Polygons](https://labelstud.io/templates/image_polygons) template.
 
-After labeling, export the dataset using "Yolo with Images" format and put the data in the `datasets` folder.
+After labeling, export the dataset using the "YOLO with Images" format and place it in the `datasets` folder.
 
-As a start, there is already a dataset `datasets/vitiligo-poc` to training a simple segmentation model.
+For initial testing, a sample dataset is available at `datasets/vitiligo-poc` for training a basic segmentation model.
 
-Change the `train.py` to point to the model data (or to try other hyperparams) and run:
+Modify `train.py` to specify the model data (or adjust hyperparameters) and run:
+
 
 ```bash
 python train.py
 ```
 
-After the training is finished, the model you be placed at `runs/segment/train/weights` folder. The `runs/segment/train`
-folder also includes other interesting files and charts.
+After training completes, the model will be saved in the `runs/segment/train/weights` folder. The `runs/segment/train` folder also contains additional files and charts for analysis.
 
-## Predict
+## Prediction
 
-To segment an image, adjust the `predict.py` to point to the trained model and the image that will be segmented and run:
+To segment an image, modify `predict.py` to specify the trained model and target image, then run:
 
 ```bash
 python predict.py

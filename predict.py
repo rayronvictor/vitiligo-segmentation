@@ -5,7 +5,7 @@ from utils import plot_result
 #model = YOLO("models/yolo11x-seg.pt")
 model = YOLO("runs/segment/train/weights/best.pt") # change to point to the trained weights
 
-results = model("datasets/vitiligo-poc/test/images/5aeb0f6e-images--19-_jpg.rf.6f36d713f594b4172492fdba682cfcc9.jpg")  # predict on an image
+results = model("datasets/vitiligo-poc/test/images/e3b95dde-roi306_jpg.rf.5ce06976f42b0c32bff3948336dbd72f.jpg")  # predict on an image
 
 plot_result(results[0])
 

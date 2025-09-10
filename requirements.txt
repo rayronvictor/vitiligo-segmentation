@@ -2,4 +2,4 @@ ultralytics==8.3.167
 opencv-python==4.12.0.88
 gradio==5.42.0
 pillow==11.3.0
-rembg==2.0.67
+rembg[cpu]==2.0.67

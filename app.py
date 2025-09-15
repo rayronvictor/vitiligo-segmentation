@@ -44,8 +44,10 @@ def find_point_inside_sticker(image):
 
     y_coords, x_coords = np.where(final_mask > 0)
 
-    return final_mask, int(np.mean(x_coords)), int(np.mean(y_coords))
-
+    if len(y_coords) > 0 or len(x_coords) > 0:
+        return final_mask, int(np.mean(x_coords)), int(np.mean(y_coords))
+    else:
+        return final_mask, 0, 0
 
 def calc_sticker_in_hand(input_image):
     """
@@ -88,30 +90,61 @@ def calc_sticker_in_hand(input_image):
 
     return hand_img_without_bg, sticker_without_bg, sticker_num_pixels / hand_num_pixels
 
+debug = True
+
 with gr.Blocks() as demo:
     gr.Label("Vitiligo Segmentation", container=False)
 
     with gr.Row():
-        hand_img = gr.Image(type="pil", label="Upload a picture of your hand with sticker", height=400)
-        # with gr.Group():
-        segmented_hand_img = gr.Image(type="pil", label="Segmented hand", height=400)
-        segmented_sticker_img = gr.Image(type="pil", label="Segmented sticker", height=400)
-    with gr.Row():
-        calibrate_btn= gr.Button("Calculate the sticker size", variant="primary")
-        clear_btn = gr.Button("Clear")
+        with gr.Column():
+            gr.Markdown(
+                """
+                # Step 1
+                Upload an image of a hand with a reference sticker.
+                """
+            )
+            hand_img = gr.Image(type="pil", label="Upload an image", height=400)
+            calibrate_btn = gr.Button("Calculate the sticker size", variant="primary")
+            # clear_btn = gr.Button("Clear")
 
-    sticker_in_hands = gr.Textbox(label="Sticker size in hand units")
+            if debug:
+                sticker_in_hands = gr.Textbox(label="Sticker size in hand units")
+                segmented_hand_img = gr.Image(type="pil", label="Segmented hand", height=400)
+                segmented_sticker_img = gr.Image(type="pil", label="Segmented sticker", height=400)
+        with gr.Column():
+            gr.Markdown(
+                """
+                # Step 2
+                Upload an image of a anatomical area with vitiligo and a reference sticker.
+                """
+            )
+            area_img = gr.Image(type="pil", label="Upload a picture of your anatomical area with sticker", height=400)
+            calculate_btn = gr.Button("Calculate the vitiligo area", variant="primary")
 
-    clear_btn.click(
-        fn=lambda: None,
-        inputs=[],
-        outputs=hand_img,
-    )
+            if debug:
+
+                segmented_area_img = gr.Image(type="pil", label="Segmented anatomical area", height=400)
+                segmented_area_sticker_img = gr.Image(type="pil", label="Segmented sticker", height=400)
+        with gr.Column():
+            gr.Markdown(
+                """
+                # Result
+                The segmented vitiligo area in hand units.
+                """
+            )
+            result_img = gr.Image(type="pil", label="Segmented vitiligo", height=400)
+            vitiligo_area_in_hands = gr.Textbox(label="The vitiligo area in hand units")
 
     calibrate_btn.click(
         fn=calc_sticker_in_hand,
         inputs=hand_img,
         outputs=[segmented_hand_img, segmented_sticker_img, sticker_in_hands],
+    )
+
+    calculate_btn.click(
+        fn=calc_sticker_in_hand,
+        inputs=area_img,
+        outputs=[segmented_area_img, segmented_area_sticker_img, vitiligo_area_in_hands],
     )
 
     # with gr.Row():

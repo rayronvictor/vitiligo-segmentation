@@ -90,6 +90,12 @@ def calc_sticker_in_hand(input_image):
 
     return hand_img_without_bg, sticker_without_bg, sticker_num_pixels / hand_num_pixels
 
+def calc_vitiligo_areaIn_hand(input_image, sticker_in_hands):
+    """
+    desc
+    """
+    return [input_image, input_image, sticker_in_hands]
+
 debug = True
 
 with gr.Blocks() as demo:
@@ -142,8 +148,8 @@ with gr.Blocks() as demo:
     )
 
     calculate_btn.click(
-        fn=calc_sticker_in_hand,
-        inputs=area_img,
+        fn=calc_vitiligo_areaIn_hand,
+        inputs=[area_img, sticker_in_hands],
         outputs=[segmented_area_img, segmented_area_sticker_img, vitiligo_area_in_hands],
     )
 

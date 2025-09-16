@@ -5,8 +5,8 @@ from rembg import remove, new_session
 import numpy as np
 import cv2
 
-# MODEL_PATH = "runs/segment/train3/weights/best.pt"
-MODEL_PATH = "yolo11n-seg.pt"
+MODEL_PATH = "runs/segment/train3/weights/best.pt"
+# MODEL_PATH = "yolo11n-seg.pt"
 model = YOLO(MODEL_PATH)
 
 def predict_image(img, conf_threshold, iou_threshold):
@@ -20,11 +20,22 @@ def predict_image(img, conf_threshold, iou_threshold):
         imgsz=416,
     )
 
-    for r in results:
-        im_array = r.plot(boxes=False)
-        im = Image.fromarray(im_array[..., ::-1])
+    # for r in results:
+    #     print(r.masks.data.shape)
+    #     im_array = r.plot(boxes=False)
+    #     im = Image.fromarray(im_array[..., ::-1])
 
-    return im
+    r = results[0]
+
+    mask = r.masks.data
+    mask_array = (mask[0].cpu().numpy() * 255).astype(np.uint8)
+    mask_pil = Image.fromarray(mask_array)
+
+    im_array = r.plot(boxes=False)
+    im = Image.fromarray(im_array[..., ::-1])
+
+    return im, mask_pil
+
 
 def find_point_inside_sticker(image, color_ranges):
     if isinstance(image, Image.Image):
@@ -122,14 +133,14 @@ def calc_vitiligo_area_in_hand(input_image, sticker_in_hands, conf_threshold, io
         ]
     )
 
-    im = predict_image(input_image, conf_threshold, iou_threshold)
+    im, mask = predict_image(input_image, conf_threshold, iou_threshold)
 
     print(f"Sticker point: ({sticker_x}, {sticker_y})")
 
     # 2. Segment the sticker based on the point inside the sticker
     sticker_without_bg = segment_from_point(input_image, sticker_x, sticker_y)
 
-    return im, input_image, sticker_in_hands
+    return im, mask, sticker_in_hands
 
 debug = True
 

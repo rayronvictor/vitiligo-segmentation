@@ -2,7 +2,7 @@ from ultralytics import YOLO
 from split_kfold import split_dataset
 from pathlib import Path
 
-MODEL_PATH = "yolo11n-seg.pt"
+MODEL_PATH = "yolo11x-seg.pt"
 batch = 16
 project = "vitiligo-poc"
 epochs = 100

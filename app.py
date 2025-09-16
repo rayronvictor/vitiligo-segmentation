@@ -161,8 +161,8 @@ with gr.Blocks() as demo:
             )
             area_img = gr.Image(type="pil", label="Upload a picture of your anatomical area with sticker", height=400)
             with gr.Accordion("Advanced options", open=False):
-                conf_threshold = gr.Slider(minimum=0, maximum=1, value=0.25, label="Confidence threshold"),
-                iou_threshold = gr.Slider(minimum=0, maximum=1, value=0.7, label="IoU threshold"),
+                confidence = gr.Slider(minimum=0, maximum=1, value=0.25, label="Confidence threshold")
+                iou = gr.Slider(minimum=0, maximum=1, value=0.7, label="IoU threshold")
             calculate_btn = gr.Button("Calculate the vitiligo area", variant="primary")
 
             if debug:
@@ -186,7 +186,7 @@ with gr.Blocks() as demo:
 
     calculate_btn.click(
         fn=calc_vitiligo_area_in_hand,
-        inputs=[area_img, sticker_in_hands, conf_threshold, iou_threshold],
+        inputs=[area_img, sticker_in_hands, confidence, iou],
         outputs=[segmented_area_img, segmented_area_sticker_img, vitiligo_area_in_hands],
     )
 

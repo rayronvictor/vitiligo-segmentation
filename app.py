@@ -5,7 +5,7 @@ from rembg import remove, new_session
 import numpy as np
 import cv2
 
-MODEL_PATH = "models/vitiligox-seg.pt"
+MODEL_PATH = "models/vitiligon-seg.pt"
 model = YOLO(MODEL_PATH)
 
 def predict_image(img, conf_threshold, iou_threshold):

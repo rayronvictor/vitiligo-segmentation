@@ -33,14 +33,10 @@ Modify `train.py` to specify the model data (or adjust hyperparameters) and run:
 python train.py
 ```
 
-After training completes, the model will be saved in the `runs/segment/train/weights` folder. The `runs/segment/train` folder also contains additional files and charts for analysis.
+After training completes, the model will be saved in the `vitiligo-poc/fold_n/weights` folder. The `vitiligo-poc/fold_n` folder also contains additional files and charts for analysis.
 
-## Prediction
+## Run the app
 
-To segment an image, modify `predict.py` to specify the trained model and target image, then run:
-
-```bash
-python predict.py
-```
+To segment an image, run `gradio app.py`
 
 

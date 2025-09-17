@@ -1,5 +1,9 @@
 runs
+!models/*.pt
 *.pt
+*.onnx
 **/*.cache
 .idea
 __pycache__
+.gradio
+vitiligo-poc

@@ -1,0 +1,6 @@
+*
+!/.gitignore
+!images
+!labels
+!test
+!dataset.yaml

@@ -35,7 +35,7 @@ python train.py
 
 After training completes, the model will be saved in the `vitiligo-poc/fold_n/weights` folder. The `vitiligo-poc/fold_n` folder also contains additional files and charts for analysis.
 
-## Run the app
+## Running the app
 
 To segment an image, run `gradio app.py`
 
